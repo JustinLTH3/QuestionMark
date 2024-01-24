@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] List<GameObject> spawnPos = new List<GameObject>();
+    List<GameObject> spawnPos = new List<GameObject>();
     //Store loaded enemies, true == spawned
-    [SerializeField] Dictionary<GameObject, bool> enemies = new();
+    Dictionary<GameObject, bool> enemies = new();
     List<Enemy> enemiesList = new();
     float spawnFreq = 5;
-
+    public static Spawner Instance;
 
     private void Start()
     {
         List<GameObject> enemyPrefab = new();
+        Instance = this;
         enemyPrefab.AddRange(Resources.LoadAll<GameObject>("Enemies/"));
         for (int j = 0; j < 3; j++)
         {
@@ -23,6 +24,13 @@ public class Spawner : MonoBehaviour
                 enemies.Add(key, false);
                 enemiesList.Add(key.GetComponent<Enemy>());
             }
+        }
+        Camera.main.orthographicSize = 8 * Screen.height / Screen.width * 0.5f;
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject temp = new GameObject("spawnpos" + i);
+            temp.transform.position = new(2 * i - 2 * (3 - 3 % 2) / 2, 0, 0);
+            spawnPos.Add(temp);
         }
         StartGame();
     }
@@ -42,10 +50,15 @@ public class Spawner : MonoBehaviour
                 rand = Random.Range(0, enemies.Count);
             }
             enemies[enemiesList[rand].gameObject] = true;
-            enemiesList[rand].Spawn(Vector3.zero);
+            int rand2 = Random.Range(0, spawnPos.Count);
+            enemiesList[rand].Spawn(spawnPos[rand2].transform.position);
 
             yield return waitForSeconds;
         }
 
+    }
+    public void Despawn(GameObject enemy)
+    {
+        enemies[enemy] = false;
     }
 }

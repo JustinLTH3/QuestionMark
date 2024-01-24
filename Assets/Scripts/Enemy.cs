@@ -13,11 +13,13 @@ public class Enemy : MonoBehaviour
     public void Spawn(Vector3 spawnpos)
     {
         gameObject.SetActive(true);
+        gameObject.transform.position = spawnpos;
         StartCoroutine(Despawn());
     }
     public IEnumerator Despawn()
     {
         yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
+        Spawner.Instance.Despawn(gameObject);
     }
 }
