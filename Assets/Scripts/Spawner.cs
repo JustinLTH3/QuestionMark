@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Spawner : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Spawner : MonoBehaviour
     //Store loaded enemies, true == spawned
     Dictionary<GameObject, bool> enemies = new();
     List<Enemy> enemiesList = new();
-    float spawnFreq = 5;
+    float spawnFreq = 2;
     public static Spawner Instance;
     [SerializeField] private int TrackNum;
 
@@ -28,14 +29,13 @@ public class Spawner : MonoBehaviour
             }
         }
 
-        Camera.main.orthographicSize = 8 * Screen.width / Screen.height * 0.5f;
         for (int i = 0; i < TrackNum; i++)
         {
-            GameObject temp = new("spawnpos" + i)
+            GameObject temp = new("SpawnPos" + i)
             {
                 transform =
                 {
-                    position = new Vector3(2 * i - (TrackNum - TrackNum % 2) / 2, 0, 0)
+                    position = new Vector3(2 * i - (TrackNum - TrackNum % 2), Camera.main.orthographicSize, 0)
                 }
             };
             spawnPos.Add(temp);
