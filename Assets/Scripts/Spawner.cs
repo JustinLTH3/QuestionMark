@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
     float spawnFreq = 2;
     public static Spawner Instance;
     [SerializeField] private int TrackNum;
+    [SerializeField] private Transform[] lines = new Transform[2];
 
     private void Start()
     {
@@ -31,16 +32,25 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < TrackNum; i++)
         {
+            float x = Camera.main.orthographicSize / Screen.height * Screen.width * 2f;
+            x /= 3f;
+
             GameObject temp = new("SpawnPos" + i)
             {
                 transform =
                 {
-                    position = new Vector3(2 * i - (TrackNum - TrackNum % 2), Camera.main.orthographicSize, 0)
+                    position = new Vector3(x * i - (TrackNum - TrackNum % 2)*x/2, Camera.main.orthographicSize+1, 0)
                 }
             };
             spawnPos.Add(temp);
+            temp = new("PlayerPos" + i)
+            {
+                transform = { position = new Vector3(x * i - (TrackNum - TrackNum % 2) * x / 2, -Camera.main.orthographicSize + 4, 0) }
+            };
+            PlayerMovement.instance.AddPlayerPos(temp);
         }
-
+        lines[0].position = new((spawnPos[0].transform.position.x + spawnPos[1].transform.position.x) / 2, 0, 0);
+        lines[1].position = new((spawnPos[2].transform.position.x + spawnPos[1].transform.position.x) / 2, 0, 0);
         StartGame();
     }
 
