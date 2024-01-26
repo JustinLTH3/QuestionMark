@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class playerCollision : MonoBehaviour
 {
+
+    public PlayerMovement movement;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
         if (collision.tag == "enemy")
         { 
-            
             Debug.Log("collide");
+
+            movement.enabled = false;
+            Spawner.instance.EndGame();
         }
     }
 

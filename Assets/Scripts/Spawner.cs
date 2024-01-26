@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class Spawner : MonoBehaviour
 {
+    public static Spawner instance;
     List<GameObject> spawnPos = new();
 
     //Store loaded enemies, true == spawned
@@ -15,9 +16,11 @@ public class Spawner : MonoBehaviour
     public static Spawner Instance;
     [SerializeField] private int TrackNum;
     [SerializeField] private Transform[] lines = new Transform[2];
+    Coroutine GameLoop;
 
     private void Start()
     {
+        instance = this;
         List<GameObject> enemyPrefab = new();
         Instance = this;
         enemyPrefab.AddRange(Resources.LoadAll<GameObject>("Enemies/"));
@@ -57,7 +60,7 @@ public class Spawner : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(SpawnEnemy());
+        GameLoop = StartCoroutine(SpawnEnemy());
     }
 
     IEnumerator SpawnEnemy()
@@ -82,5 +85,9 @@ public class Spawner : MonoBehaviour
     public void Despawn(GameObject enemy)
     {
         enemies[enemy] = false;
+    }
+    public void EndGame()
+    {
+        StopCoroutine(GameLoop);
     }
 }

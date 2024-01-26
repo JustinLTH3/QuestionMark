@@ -1663,6 +1663,7 @@ GameObject:
   - component: {fileID: 1296132439}
   - component: {fileID: 1296132438}
   - component: {fileID: 1296132441}
+  - component: {fileID: 1296132442}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -1734,7 +1735,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1296132439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1296132442}
+        m_TargetAssemblyTypeName: levelManager, Assembly-CSharp
+        m_MethodName: changeScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1296132439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1794,6 +1807,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1296132442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296132436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5177d20efd2ff547a580a187b92ecfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Game
 --- !u!1 &1446881630
 GameObject:
   m_ObjectHideFlags: 0
