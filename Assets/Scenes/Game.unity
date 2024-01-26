@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7ffa0992d31b046b2e4e380385bf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputMode: 1
+  inputMode: 2
   PlayerPositions: []
 --- !u!50 &1878520858
 Rigidbody2D:
