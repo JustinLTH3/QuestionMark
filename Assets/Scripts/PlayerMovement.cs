@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 fingerDown;
     Vector2 fingerUp;
-    float moveInput;
+    int Pos = 1;
     public void AddPlayerPos(GameObject pos)
     {
         PlayerPositions.Add(pos);
@@ -26,7 +26,13 @@ public class PlayerMovement : MonoBehaviour
     {
         //transform.position = PlayerPositions[1].transform.position;
     }
-
+    public void ResetPos()
+    {
+        if (PlayerPositions[Pos] != null)
+        {
+            transform.position = PlayerPositions[Pos].transform.position;
+        }
+    }
     void Update()
     {
         if (inputMode == InputMode.Swipe)
@@ -42,7 +48,15 @@ public class PlayerMovement : MonoBehaviour
             TouchMove();
         }
     }
-
+    void Move(int right)
+    {
+        int tempPos = Pos + right;
+        if (tempPos < PlayerPositions.Count && tempPos >= 0)
+        {
+            transform.position = PlayerPositions[tempPos].transform.position;
+            Pos = tempPos;
+        }
+    }
     void TouchMove()
     {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
@@ -50,25 +64,11 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log(Input.touchCount);
             if (Input.mousePosition.x > (Screen.width * 0.75f))
             {
-                if (transform.position == PlayerPositions[1].transform.position)
-                {
-                    transform.position = PlayerPositions[2].transform.position;
-                }
-                else if (transform.position == PlayerPositions[0].transform.position)
-                {
-                    transform.position = PlayerPositions[1].transform.position;
-                }
+                Move(1);
             }
-            if (Input.mousePosition.x <= (Screen.width * 0.25f))
+            else if (Input.mousePosition.x <= (Screen.width * 0.25f))
             {
-                if (transform.position == PlayerPositions[1].transform.position)
-                {
-                    transform.position = PlayerPositions[0].transform.position;
-                }
-                else if (transform.position == PlayerPositions[2].transform.position)
-                {
-                    transform.position = PlayerPositions[1].transform.position;
-                }
+                Move(-1);
             }
         }
     }
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
                 fingerDown = Input.touches[0].position;
                 Debug.Log("touch");
             }
-            if (Input.touches[0].phase == TouchPhase.Ended)
+            else if (Input.touches[0].phase == TouchPhase.Ended)
             {
                 fingerUp = Input.touches[0].position;
                 CheckSwipe();
@@ -92,78 +92,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Keyboard()
     {
-        if (Input.GetKeyDown(KeyCode.R)) { transform.position = PlayerPositions[1].transform.position; }
-        if (transform.position == PlayerPositions[1].transform.position)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            if (Input.GetKeyDown("a"))
-            {
-                transform.position = PlayerPositions[0].transform.position;
-            }
-            else if (Input.GetKeyDown("d"))
-            {
-                transform.position = PlayerPositions[2].transform.position;
-            }
+            Move(-1);
         }
-        else if (transform.position == PlayerPositions[2].transform.position)
+        else if (Input.GetKeyDown(KeyCode.D))
         {
-            if (Input.GetKeyDown("a"))
-            {
-                transform.position = PlayerPositions[1].transform.position;
-            }
-            else if (Input.GetKeyDown("d"))
-            {
-                transform.position = PlayerPositions[2].transform.position;
-            }
+            Move(1);
         }
-        else if (transform.position == PlayerPositions[0].transform.position)
-        {
-            if (Input.GetKeyDown("a"))
-            {
-                transform.position = PlayerPositions[0].transform.position;
-            }
-            else if (Input.GetKeyDown("d"))
-            {
-                transform.position = PlayerPositions[1].transform.position;
-            }
-        }
-
-
     }
 
     void CheckSwipe()
     {
         if (fingerDown.x - fingerUp.x < 0)
         {
-            OnSwipeRight();
+            Move(1);
         }
 
         else if (fingerDown.x - fingerUp.x > 0)
         {
-            OnSwipeLeft();
-        }
-    }
-
-    void OnSwipeLeft()
-    {
-        if (transform.position == PlayerPositions[1].transform.position)
-        {
-            transform.position = PlayerPositions[0].transform.position;
-        }
-        else if (transform.position == PlayerPositions[2].transform.position)
-        {
-            transform.position = PlayerPositions[1].transform.position;
-        }
-    }
-
-    void OnSwipeRight()
-    {
-        if (transform.position == PlayerPositions[1].transform.position)
-        {
-            transform.position = PlayerPositions[2].transform.position;
-        }
-        else if (transform.position == PlayerPositions[0].transform.position)
-        {
-            transform.position = PlayerPositions[1].transform.position;
+            Move(-1);
         }
     }
 }

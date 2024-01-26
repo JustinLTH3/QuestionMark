@@ -49,6 +49,7 @@ public class Spawner : MonoBehaviour
             };
             PlayerMovement.instance.AddPlayerPos(temp);
         }
+        PlayerMovement.instance.ResetPos();
         lines[0].position = new((spawnPos[0].transform.position.x + spawnPos[1].transform.position.x) / 2, 0, 0);
         lines[1].position = new((spawnPos[2].transform.position.x + spawnPos[1].transform.position.x) / 2, 0, 0);
         StartGame();
