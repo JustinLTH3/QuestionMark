@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
+[Serializable] public enum InputMode { Touch, Keyboard, Swipe }
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
-    public enum InputMode { Touch, Keyboard, Swipe }
+
     public InputMode inputMode = InputMode.Touch;
 
     [SerializeField] List<GameObject> PlayerPositions = new List<GameObject>();
@@ -14,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 fingerDown;
     Vector2 fingerUp;
     int Pos = 1;
+    UnityAction OnInputModeChange;
     public void AddPlayerPos(GameObject pos)
     {
         PlayerPositions.Add(pos);
@@ -21,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        inputMode = Settings.instance.InputMode_;
+        OnInputModeChange = delegate { inputMode = Settings.instance.InputMode_; };
+        Settings.instance.OnInputModeChange.AddListener(OnInputModeChange);
     }
     void Start()
     {
@@ -113,5 +120,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(-1);
         }
+    }
+    private void OnDestroy()
+    {
+        Settings.instance.OnInputModeChange.RemoveListener(OnInputModeChange);
     }
 }
