@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int TrackNum;
     [SerializeField] private Transform[] lines = new Transform[2];
     Coroutine GameLoop;
+    [SerializeField]Animator KillScreen;
 
     private void Start()
     {
@@ -88,6 +89,10 @@ public class Spawner : MonoBehaviour
     }
     public void EndGame()
     {
+        
+        KillScreen.SetTrigger("Enable");
+
         StopCoroutine(GameLoop);
+
     }
 }
