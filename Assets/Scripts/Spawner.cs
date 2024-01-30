@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,6 +18,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int TrackNum;
     [SerializeField] private Transform[] lines = new Transform[2];
     Coroutine GameLoop;
+    [SerializeField] Animator killscreen;
+    float timer;
+    [SerializeField] TMP_Text scoreDisplayInGame;
+    [SerializeField] TMP_Text FinalScore;
 
     private void Start()
     {
@@ -65,7 +70,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnEnemy()
     {
-        WaitForSeconds waitForSeconds = new(spawnFreq);
+        timer = Time.time;
         while (true)
         {
             int rand = Random.Range(0, enemies.Count);
@@ -78,7 +83,7 @@ public class Spawner : MonoBehaviour
             int rand2 = Random.Range(0, spawnPos.Count);
             enemiesList[rand].Spawn(spawnPos[rand2].transform.position);
 
-            yield return waitForSeconds;
+            yield return new WaitForSeconds(spawnFreq);
         }
     }
 
@@ -88,6 +93,10 @@ public class Spawner : MonoBehaviour
     }
     public void EndGame()
     {
+        killscreen.SetTrigger("Enable");
+        int score = (int)(Time.time - timer);
+        FinalScore.text = score.ToString();
+        if (PlayerPrefs.GetInt("HighScore", 0) < score) PlayerPrefs.SetInt("HighScore", score);
         StopCoroutine(GameLoop);
     }
 }

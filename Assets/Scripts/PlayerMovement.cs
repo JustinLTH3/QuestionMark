@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
 
     public InputMode inputMode = InputMode.Touch;
+    public AudioSource playerSwipeSFX;
 
     [SerializeField] List<GameObject> PlayerPositions = new List<GameObject>();
 
@@ -32,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         //transform.position = PlayerPositions[1].transform.position;
+
+        playerSwipeSFX = GameObject.Find("PlayerSFX").GetComponent<AudioSource>();
+
     }
     public void ResetPos()
     {
@@ -40,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
             transform.position = PlayerPositions[Pos].transform.position;
         }
     }
+
+
     void Update()
     {
         if (inputMode == InputMode.Swipe)
@@ -62,7 +69,9 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = PlayerPositions[tempPos].transform.position;
             Pos = tempPos;
+            playerSwipeSFX.Play();
         }
+
     }
     void TouchMove()
     {
@@ -94,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
                 CheckSwipe();
             }
         }
+        playerSwipeSFX.Play();
 
     }
 
@@ -102,11 +112,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Move(-1);
+
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             Move(1);
+
         }
+        
     }
 
     void CheckSwipe()
