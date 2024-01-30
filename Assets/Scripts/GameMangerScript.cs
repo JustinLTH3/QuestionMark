@@ -17,7 +17,7 @@ public class GameManger : MonoBehaviour
         AudioListener.volume = slider.value;
     }
 
-    void Start()
+    void start()
     {
         volume.value = AudioListener.volume;
         AudioListener.volume = PlayerPrefs.GetFloat("AudioLevel", 1);
