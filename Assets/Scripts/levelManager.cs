@@ -8,16 +8,10 @@ public class levelManager : MonoBehaviour
 {
 
     public string sceneName = "Game";
-    // Start is called before the first frame update
-    void Start()
+    
+    public void QuitGame()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Application.Quit();
     }
 
     public void changeScene()
