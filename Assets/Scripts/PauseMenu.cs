@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     bool check = false;
     private void Start()
     {
+
         pauseMenu.SetActive(false);
     }
     public void OnPauseButtonClick()
@@ -24,6 +25,6 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
-        //Button.gameObject.SetActive(true);
+        
     }
 }
