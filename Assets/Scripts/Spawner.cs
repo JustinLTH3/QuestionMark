@@ -75,6 +75,7 @@ public class Spawner : MonoBehaviour
 
     public void StartGame()
     {
+        if (GameLoop != null) return;
         GameLoop = StartCoroutine(SpawnEnemy());
         HighScore.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         scoreDisplayInGame.text = "0";
@@ -194,5 +195,6 @@ public class Spawner : MonoBehaviour
         }
         StopCoroutine(GameLoop);
         StopCoroutine(UpdateScoreCor);
+        GameLoop = null;
     }
 }

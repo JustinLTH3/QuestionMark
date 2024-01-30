@@ -26,4 +26,8 @@ public class SettingsMenu : MonoBehaviour
 
         inputMode.onValueChanged.AddListener(ChangeInputMode);
     }
+    public void SetHighScoreText(TMP_Text txt)
+    {
+        txt.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+    }
 }
