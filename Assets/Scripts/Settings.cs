@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Settings : MonoBehaviour
     public InputMode InputMode_ { get; private set; }
 
     public float MusicVolume { get; private set; }
+
     public UnityEvent OnInputModeChange;
     public UnityEvent OnVolumeChange;
 

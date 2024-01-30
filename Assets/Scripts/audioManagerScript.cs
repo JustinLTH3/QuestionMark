@@ -22,6 +22,10 @@ public class audioManager : MonoBehaviour
 
         void Start()
         {
+
+
+            PlayerSwipeSFX = GameObject.Find("PlayerSFX").GetComponent<AudioSource>();
+
             DontDestroyOnLoad(gameObject);
         }
     }
