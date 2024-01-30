@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManger : MonoBehaviour
 {
-    bool vibrate;
+    public bool vibrate { get; private set; }
     [SerializeField] Slider volume;
     [SerializeField] Toggle vibration;
 
@@ -17,7 +17,7 @@ public class GameManger : MonoBehaviour
         AudioListener.volume = slider.value;
     }
 
-    void start()
+    void Start()
     {
         volume.value = AudioListener.volume;
         AudioListener.volume = PlayerPrefs.GetFloat("AudioLevel", 1);

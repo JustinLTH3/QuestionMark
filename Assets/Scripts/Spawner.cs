@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
     List<GameObject> spawnPos = new();
+    bool vibrate;
 
     //Store loaded enemies, true == spawned
     Dictionary<GameObject, bool> enemies = new();
@@ -35,6 +36,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        vibrate = (PlayerPrefs.GetInt("Vibrate", 1) == 1);
         instance = this;
         List<GameObject> enemyPrefab = new();
         Instance = this;
@@ -76,6 +78,7 @@ public class Spawner : MonoBehaviour
     public void StartGame()
     {
         if (GameLoop != null) return;
+        PauseButton.gameObject.SetActive(true);
         GameLoop = StartCoroutine(SpawnEnemy());
         HighScore.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         scoreDisplayInGame.text = "0";
@@ -186,6 +189,7 @@ public class Spawner : MonoBehaviour
     {
         PauseButton.gameObject.SetActive(false);
         killscreen.SetTrigger("Enable");
+        if (vibrate) Handheld.Vibrate();
         int score = (int)(Time.time - timer);
         FinalScore.text = score.ToString();
         if (PlayerPrefs.GetInt("HighScore", 0) < score)

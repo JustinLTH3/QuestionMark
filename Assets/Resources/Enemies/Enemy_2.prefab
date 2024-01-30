@@ -8,9 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9082326390274864436, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 10.08
+      objectReference: {fileID: 0}
     - target: {fileID: 2909825649101815766, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2909825649101815766, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2909825649101815766, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2909825649101815766, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2909825649101815766, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,9 +68,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6749416203534868299, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bc3faccb4c027d54aaed5d436f4edf5e, type: 3}
     - target: {fileID: 8446575053473286493, guid: 81f9790adde70914b8cadfa17875df40, type: 3}
       propertyPath: m_Name
-      value: Enemy_0
+      value: Enemy_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

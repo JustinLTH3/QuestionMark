@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            if ((Input.mousePosition.x > (Screen.width * 0.75f)) && (Input.mousePosition.y < (Screen.width * 0.85f)))
+            if ((Input.mousePosition.x > (Screen.width * 0.75f)) && (Input.mousePosition.y < (Screen.height * 0.8f)))
             {
                 Move(1);
             }
