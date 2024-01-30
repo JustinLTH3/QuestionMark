@@ -10,7 +10,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] Toggle inputMode;
     [SerializeField] TMP_Text inputModeTxt;
     UnityAction<bool> ChangeInputMode;
-    private void Start()
+    private void start()
     {
         inputModeTxt.text = Settings.instance.GetStringInputMode();
         inputMode.isOn = Settings.instance.InputMode_ == InputMode.Swipe ? true : false;
