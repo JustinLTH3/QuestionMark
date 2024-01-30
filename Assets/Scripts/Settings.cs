@@ -15,7 +15,11 @@ public class Settings : MonoBehaviour
     private void Awake()
     {
         if (instance == null) instance = this;
-        else Destroy(this);
+        else
+        {
+            Destroy(instance);
+            instance = this;
+        }
         DontDestroyOnLoad(this);
         InputMode_ = (InputMode)PlayerPrefs.GetInt("InputMode", (int)InputMode.Swipe);
     }

@@ -17,11 +17,16 @@ public class Spawner : MonoBehaviour
     public static Spawner Instance;
     [SerializeField] private int TrackNum;
     [SerializeField] private Transform[] lines = new Transform[2];
+
     Coroutine GameLoop;
+    Coroutine UpdateScoreCor;
+
     [SerializeField] Animator killscreen;
     float timer;
     [SerializeField] TMP_Text scoreDisplayInGame;
     [SerializeField] TMP_Text FinalScore;
+
+    [SerializeField] TMP_Text HighScore;
 
     private void Start()
     {
@@ -66,11 +71,24 @@ public class Spawner : MonoBehaviour
     public void StartGame()
     {
         GameLoop = StartCoroutine(SpawnEnemy());
-    }
+        HighScore.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
+        scoreDisplayInGame.text = "0";
 
+    }
+    IEnumerator UpdateScore()
+    {
+        WaitForSeconds one = new(1);
+        while (true)
+        {
+            yield return one;
+            scoreDisplayInGame.text = ((int)(Time.time - timer)).ToString();
+        }
+
+    }
     IEnumerator SpawnEnemy()
     {
         timer = Time.time;
+        UpdateScoreCor = StartCoroutine(UpdateScore());
         while (true)
         {
             int rand = Random.Range(0, enemies.Count);
@@ -96,7 +114,12 @@ public class Spawner : MonoBehaviour
         killscreen.SetTrigger("Enable");
         int score = (int)(Time.time - timer);
         FinalScore.text = score.ToString();
-        if (PlayerPrefs.GetInt("HighScore", 0) < score) PlayerPrefs.SetInt("HighScore", score);
+        if (PlayerPrefs.GetInt("HighScore", 0) < score)
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
+        }
         StopCoroutine(GameLoop);
+        StopCoroutine(UpdateScoreCor);
     }
 }
