@@ -2894,7 +2894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5177d20efd2ff547a580a187b92ecfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: GameHighScore
+  sceneName: Game
 --- !u!4 &1321110111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2031723322442999643, guid: 8af36b37a6662e547967c7af8099e535, type: 3}
