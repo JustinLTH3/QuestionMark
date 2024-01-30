@@ -113,6 +113,7 @@ public class Spawner : MonoBehaviour
                 if (spawnFreq > 1f)
                     spawnFreq -= .3f;
             }
+            if ((int)(Time.time - timer) > 30) break;
             if (spawn > 1)
             {
                 yield return one;
@@ -126,7 +127,6 @@ public class Spawner : MonoBehaviour
                 continue;
             }
 
-            Debug.Log("hi");
             int rand = Random.Range(0, enemies.Count);
             while (enemies[enemiesList[rand].gameObject])
             {
@@ -138,6 +138,42 @@ public class Spawner : MonoBehaviour
             enemiesList[rand].Spawn(spawnPos[rand2].transform.position);
             yield return null;
             spawn = spawnFreq;
+        }
+        spawnFreq = 1.5f;
+        while (true)
+        {
+            if ((int)(Time.time - timer) % 5 == 0)
+            {
+                if (spawnFreq > 1f)
+                    spawnFreq -= .3f;
+            }
+            if (spawn > 1)
+            {
+                yield return one;
+                spawn -= 1;
+                continue;
+            }
+            else if (spawn > 0)
+            {
+                yield return null;
+                spawn -= Time.deltaTime;
+                continue;
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                int rand = Random.Range(0, enemies.Count);
+                while (enemies[enemiesList[rand].gameObject])
+                {
+                    rand = Random.Range(0, enemies.Count);
+                }
+
+                enemies[enemiesList[rand].gameObject] = true;
+                int rand2 = Random.Range(0, spawnPos.Count);
+                enemiesList[rand].Spawn(spawnPos[rand2].transform.position);
+                yield return null;
+                spawn = spawnFreq;
+            }
+
         }
     }
 
