@@ -4,6 +4,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour
 {
@@ -25,6 +27,9 @@ public class Spawner : MonoBehaviour
     float timer;
     [SerializeField] TMP_Text scoreDisplayInGame;
     [SerializeField] TMP_Text FinalScore;
+    public Button PauseButton;
+
+    bool isPaused = false;
 
     [SerializeField] TMP_Text HighScore;
 
@@ -111,6 +116,7 @@ public class Spawner : MonoBehaviour
     }
     public void EndGame()
     {
+        PauseButton.gameObject.SetActive(false);
         killscreen.SetTrigger("Enable");
         int score = (int)(Time.time - timer);
         FinalScore.text = score.ToString();

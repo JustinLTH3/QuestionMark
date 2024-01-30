@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/MainMenuWithingSwipeSettings.unity
-    guid: 50b711812ed9dbe45bc266b820eb4440
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 61d7a834160beb148abd31ba7d307c08
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
