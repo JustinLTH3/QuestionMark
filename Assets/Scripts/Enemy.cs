@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    new Rigidbody2D rigidbody;
+    Rigidbody2D rb;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         gameObject.SetActive(false);
     }
 
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     {
         gameObject.SetActive(true);
         transform.position = spawnPos;
-        rigidbody.velocity = new Vector2(0, -10);
+        rb.velocity = new Vector2(0, -10);
         StartCoroutine(Despawn());
     }
 
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         gameObject.SetActive(false);
-        rigidbody.velocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
         Spawner.Instance.Despawn(gameObject);
     }
 }

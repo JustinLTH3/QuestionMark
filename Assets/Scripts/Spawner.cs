@@ -29,9 +29,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] TMP_Text FinalScore;
     public Button PauseButton;
 
-    bool isPaused = false;
-
     [SerializeField] TMP_Text HighScore;
+
+    [SerializeField] TMP_Text CountDown;
 
     private void Start()
     {
@@ -78,7 +78,8 @@ public class Spawner : MonoBehaviour
         GameLoop = StartCoroutine(SpawnEnemy());
         HighScore.text = "High Score: " + PlayerPrefs.GetInt("HighScore", 0);
         scoreDisplayInGame.text = "0";
-
+        PlayerMovement.instance.enabled = true;
+        spawnFreq = 2;
     }
     IEnumerator UpdateScore()
     {
@@ -92,10 +93,40 @@ public class Spawner : MonoBehaviour
     }
     IEnumerator SpawnEnemy()
     {
+
+        WaitForSeconds one = new(1);
+        CountDown.enabled = true;
+        for (int i = 3; i > 0; i--)
+        {
+            CountDown.text = i.ToString();
+            yield return one;
+        }
+        CountDown.enabled = false;
         timer = Time.time;
         UpdateScoreCor = StartCoroutine(UpdateScore());
+        PlayerMovement.instance.ResetPos();
+        float spawn = 0;
         while (true)
         {
+            if ((int)(Time.time - timer) % 5 == 0)
+            {
+                spawnFreq -= .3f;
+                Debug.Log(spawnFreq);
+            }
+            if (spawn > 1)
+            {
+                yield return one;
+                spawn -= 1;
+                continue;
+            }
+            else if (spawn > 0)
+            {
+                yield return null;
+                spawn -= Time.deltaTime;
+                continue;
+            }
+
+            Debug.Log("hi");
             int rand = Random.Range(0, enemies.Count);
             while (enemies[enemiesList[rand].gameObject])
             {
@@ -105,8 +136,8 @@ public class Spawner : MonoBehaviour
             enemies[enemiesList[rand].gameObject] = true;
             int rand2 = Random.Range(0, spawnPos.Count);
             enemiesList[rand].Spawn(spawnPos[rand2].transform.position);
-
-            yield return new WaitForSeconds(spawnFreq);
+            yield return null;
+            spawn = spawnFreq;
         }
     }
 

@@ -9,20 +9,6 @@ public class GameManger : MonoBehaviour
     bool vibrate;
     [SerializeField] Slider volume;
     [SerializeField] Toggle vibration;
-    public bool GetVibrate
-    {
-        get
-        {
-
-            if (vibrate)
-            {
-                Handheld.Vibrate();
-            }
-
-            return vibrate;
-        }
-
-    }
 
     public void AudioValueChange(Slider slider)
     {
@@ -33,21 +19,17 @@ public class GameManger : MonoBehaviour
 
     void Start()
     {
+        volume.value = AudioListener.volume;
         AudioListener.volume = PlayerPrefs.GetFloat("AudioLevel", 1);
-        FindObjectOfType<Slider>().value = PlayerPrefs.GetFloat("AudioLevel", 1);
 
         vibrate = (PlayerPrefs.GetInt("Vibrate", 1) == 1);
-        Debug.Log(vibrate);
         vibration.isOn = vibrate;
-        volume.value = AudioListener.volume;
     }
 
     public void Vibrate()
     {
         if (vibrate)
             Handheld.Vibrate();
-
-
     }
 
     public void VibrationToggleChange(Toggle toggle)

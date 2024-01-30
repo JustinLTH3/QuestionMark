@@ -12,8 +12,6 @@ public class playerCollision : MonoBehaviour
         
         if (collision.tag == "enemy")
         { 
-            Debug.Log("collide");
-
             movement.enabled = false;
             Spawner.instance.EndGame();
         }

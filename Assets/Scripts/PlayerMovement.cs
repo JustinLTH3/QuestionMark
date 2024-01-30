@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ResetPos()
     {
-        if (PlayerPositions[Pos] != null)
+        if (PlayerPositions[1] != null)
         {
             transform.position = PlayerPositions[Pos].transform.position;
         }
@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     void Move(int right)
     {
         int tempPos = Pos + right;
+        if (Time.timeScale == 0) return;
         if (tempPos < PlayerPositions.Count && tempPos >= 0)
         {
             transform.position = PlayerPositions[tempPos].transform.position;
@@ -77,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            Debug.Log(Input.touchCount);
             if ((Input.mousePosition.x > (Screen.width * 0.75f)) && (Input.mousePosition.y < (Screen.width * 0.85f)))
             {
                 Move(1);
@@ -95,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
             if (Input.touches[0].phase == TouchPhase.Began)
             {
                 fingerDown = Input.touches[0].position;
-                Debug.Log("touch");
             }
             else if (Input.touches[0].phase == TouchPhase.Ended)
             {
@@ -112,12 +111,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Move(-1);
-
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             Move(1);
-
         }
 
     }

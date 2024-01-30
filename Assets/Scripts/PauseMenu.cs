@@ -8,7 +8,6 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public Button Button;
-    bool check = false;
     private void Start()
     {
         pauseMenu.SetActive(false);
