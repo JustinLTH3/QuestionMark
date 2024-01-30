@@ -7,10 +7,11 @@ public class Settings : MonoBehaviour
 {
     public static Settings instance;
     public InputMode InputMode_ { get; private set; }
-    public InputMode IsSwipeEnabled { get => InputMode_; }
+
     public float MusicVolume { get; private set; }
     public UnityEvent OnInputModeChange;
     public UnityEvent OnVolumeChange;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -18,6 +19,7 @@ public class Settings : MonoBehaviour
         DontDestroyOnLoad(this);
         InputMode_ = (InputMode)PlayerPrefs.GetInt("InputMode", (int)InputMode.Swipe);
     }
+
     public string GetStringInputMode()
     {
         switch (InputMode_)
@@ -25,26 +27,26 @@ public class Settings : MonoBehaviour
             case InputMode.Swipe: return "Swipe";
             case InputMode.Keyboard: return "Keyboard";
             case InputMode.Touch: return "Touch";
-
         }
+
         return "";
     }
+
     public void ChangeInputMode(InputMode value)
     {
         if (value == InputMode_) return;
         InputMode_ = value;
         PlayerPrefs.SetInt("InputMode", (int)value);
+        PlayerPrefs.Save();
         OnInputModeChange.Invoke();
     }
+
     public void ChangeMusicVolume(float value)
     {
         if (value == MusicVolume) return;
         MusicVolume = value;
         PlayerPrefs.SetFloat("MusicVolume", value);
-        OnVolumeChange.Invoke();
-    }
-    private void OnDestroy()
-    {
         PlayerPrefs.Save();
+        OnVolumeChange.Invoke();
     }
 }
