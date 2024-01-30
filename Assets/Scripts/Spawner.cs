@@ -110,8 +110,8 @@ public class Spawner : MonoBehaviour
         {
             if ((int)(Time.time - timer) % 5 == 0)
             {
-                spawnFreq -= .3f;
-                Debug.Log(spawnFreq);
+                if (spawnFreq > 1f)
+                    spawnFreq -= .3f;
             }
             if (spawn > 1)
             {
